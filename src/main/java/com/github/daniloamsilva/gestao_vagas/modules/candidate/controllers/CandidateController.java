@@ -1,11 +1,13 @@
 package com.github.daniloamsilva.gestao_vagas.modules.candidate.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.daniloamsilva.gestao_vagas.modules.candidate.CandidateEntity;
+import com.github.daniloamsilva.gestao_vagas.modules.candidate.CandidateRepository;
 
 import jakarta.validation.Valid;
 
@@ -13,10 +15,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/candidate")
 public class CandidateController {
 
+  @Autowired
+  private CandidateRepository candidateRepository;
+
+  @SuppressWarnings("null")
   @PostMapping()
-  public void create(@Valid @RequestBody CandidateEntity candidateEntity) {
-    System.out.println("Candidato");
-    System.out.println(candidateEntity.getEmail());
-    System.out.println(candidateEntity.getId());
+  public CandidateEntity create(@Valid @RequestBody CandidateEntity candidateEntity) {
+    return this.candidateRepository.save(candidateEntity);
   }
 }
